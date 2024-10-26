@@ -22,7 +22,7 @@ st.sidebar.divider()
 latitude = st.sidebar.number_input("Enter Latitude")
 longitude = st.sidebar.number_input("Enter Longitude")
 
-geolocator = Nominatim(user_agent="MyApp")
+geolocator = Nominatim(user_agent="MyApp",timeout=30)
 
 location = None
 
