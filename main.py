@@ -28,7 +28,7 @@ location = None
 
 if city:
     try:
-        location = geolocator.geocode(city, timeout=10)
+        location = geolocator.geocode(city, timeout=30)
         if location:
             latitude = location.latitude
             longitude = location.longitude
@@ -164,7 +164,7 @@ api_key = "KfSN1O6bRG9u9tFd*PFW"
 email = "sami.jaadar@etu.uae.ac.ma"
 base_url = "https://api.acleddata.com/acled/read"
 
-location = geolocator.reverse((latitude, longitude), language='en')
+location = geolocator.reverse((latitude, longitude), language='en', timeout=30)
 
 if location:
     country = location.raw['address'].get('country', 'Country not found')
