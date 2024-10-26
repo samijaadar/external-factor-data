@@ -1,11 +1,10 @@
 from datetime import datetime, timedelta
-
+from retry_requests import retry
+import requests
 import openmeteo_requests
 import requests
 import requests_cache
 import pandas as pd
-from altair import value
-from retry_requests import retry
 import streamlit as st
 from geopy.geocoders import Nominatim
 import plotly.express as px
@@ -22,19 +21,27 @@ st.sidebar.divider()
 latitude = st.sidebar.number_input("Enter Latitude")
 longitude = st.sidebar.number_input("Enter Longitude")
 
-geolocator = Nominatim(user_agent="MyApp",timeout=30)
-
 location = None
+def get_coordinates(city):
+    url = f"https://nominatim.openstreetmap.org/search?q={city}&format=json"
+    response = requests.get(url, headers={"User-Agent": "your-app-name"})
+    data = response.json()
+    if data:
+        latitude = float(data[0]['lat'])
+        longitude = float(data[0]['lon'])
+        return latitude, longitude
+    return None
+
+
 
 if city:
     try:
-        location = geolocator.geocode(city, timeout=30)
-        if location:
-            latitude = location.latitude
-            longitude = location.longitude
+        coordinates = get_coordinates(city)
+        if coordinates:
+            latitude, longitude = coordinates
             st.write(f"City '{city}' found: {latitude}°N, {longitude}°E")
         else:
-            st.write(f"City '{city}' not found. Using latitude and longitude inputs.")
+                st.write(f"City '{city}' not found. Using latitude and longitude inputs.")
     except Exception:
         st.write("Geocoding timed out. Using latitude and longitude inputs.")
 else:
@@ -164,10 +171,18 @@ api_key = "KfSN1O6bRG9u9tFd*PFW"
 email = "sami.jaadar@etu.uae.ac.ma"
 base_url = "https://api.acleddata.com/acled/read"
 
-location = geolocator.reverse((latitude, longitude), language='en', timeout=30)
 
-if location:
-    country = location.raw['address'].get('country', 'Country not found')
+def get_country(latitude, longitude):
+    url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=jsonv2"
+    response = requests.get(url, headers={"User-Agent": "your-app-name"})
+    data = response.json()
+    if 'address' in data and 'country' in data['address']:
+        return data['address']['country']
+    return None
+
+country = get_country(latitude,longitude)
+
+if country:
 
     def fetch_acled_data_for_date(date, country):
         url = f"{base_url}?key={api_key}&email={email}&event_date={date}&country={country}"
