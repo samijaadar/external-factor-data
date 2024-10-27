@@ -173,7 +173,7 @@ base_url = "https://api.acleddata.com/acled/read"
 
 
 def get_country(latitude, longitude):
-    url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=jsonv2"
+    url = f"https://nominatim.openstreetmap.org/reverse?lat={latitude}&lon={longitude}&format=jsonv2&accept-language=en"
     response = requests.get(url, headers={"User-Agent": "your-app-name"})
     data = response.json()
     if 'address' in data and 'country' in data['address']:
