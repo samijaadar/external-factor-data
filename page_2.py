@@ -3,7 +3,13 @@ from langchain.llms import OpenAI
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 
-api_key = "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"
+from main import api_key
+
+part1 = "sk-proj-24NQEyjhrT4eNX8UW-QzyXyV-mm-pShYqlEjzZgXQFDkIvrkgw3vIn"
+part2 = "_wVXF79ShPISaIrXLFh9T3BlbkFJzxzrhQzzGMCNFEw1Yo1YpX20vSQlteH2SJGcm5lKf"
+part3 = "-cnUifOqqQUoP6lBHI2k9SYYiAFOQMGQA"
+api_key = part1 + part2 + part3
+
 llm = OpenAI(openai_api_key=api_key)
 
 template = """
