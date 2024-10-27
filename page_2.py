@@ -5,9 +5,9 @@ from langchain.prompts import PromptTemplate
 
 from main import api_key
 
-part1 = "sk-proj-24NQEyjhrT4eNX8UW-QzyXyV-mm-pShYqlEjzZgXQFDkIvrkgw3vIn"
-part2 = "_wVXF79ShPISaIrXLFh9T3BlbkFJzxzrhQzzGMCNFEw1Yo1YpX20vSQlteH2SJGcm5lKf"
-part3 = "-cnUifOqqQUoP6lBHI2k9SYYiAFOQMGQA"
+part1 = "sk-proj-DsYD4SszhsAoHln6ah9xiWafRC7DoiYDjb9HbGOcnO4xv8OWrttqIWy"
+part2 = "_VMOguzMT6N_JEH3sqLT3BlbkFJOUoEXEZvK_dqSAnzmlfxOvN53niOFEP1C"
+part3 = "o2tt2GI1ZcBJvkis2Hq-LnGtyG7UHpNw8i0Bqk5cA"
 api_key = part1 + part2 + part3
 
 llm = OpenAI(openai_api_key=api_key)
